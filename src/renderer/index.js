@@ -18,7 +18,8 @@ class FileItem extends React.Component {
 
     openFile(app, filePath) {
         const appOpt = app ? `-a ${app}` : ''
-        exec(`open ${appOpt} ${filePath}`, function (error, stdout, stderr) {
+        const cmd = process.platform === 'darwin' ? `open ${appOpt}` : 'start ""'
+        exec(`${cmd} ${filePath}`, function (error, stdout, stderr) {
             if (error !== null) {
                 alert(error)
             }
