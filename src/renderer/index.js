@@ -52,11 +52,19 @@ class App extends React.Component {
 
         const shared = remote.getGlobal('shared')
         const configPath = path.join(shared.dataPath, '_config.yml')
+        let data = null
         try {
-            var data = yaml.safeLoad(fs.readFileSync(configPath, {encoding:'utf8'}));
-            this.parseConfig(data)
+            data = yaml.safeLoad(fs.readFileSync(configPath, {encoding:'utf8'}));
         } catch (e) {
             alert(e)
+            data = null
+        }
+        if(data) {
+            try {
+                this.parseConfig(data)
+            } catch (e) {
+                alert("parsing config error: " + e)
+            }
         }
     }
 
